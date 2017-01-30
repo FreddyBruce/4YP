@@ -1,25 +1,54 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Implements the Dijkstra shortest path algorithm
-% Returns the distance from a single vertex to all others, doesn't save the path
+% INPUTS: adj - adjacency matrix
+%         s - source node
+%         target - target node (if t == [] then calcs all distances and
+%         paths
+% OUTPUTS:dist - distance
+%         P - path from s to target
 
-function d = dijkstra(adj,s)
+function [dist,P]=dijkstra(adj,s,target)
 
-n=length(adj);
-d = inf*ones(1,n); % unkown distance from source to all nodes
-d(s) = 0;    % distance from source to source
-Q = 1:n;    % node set with shortest paths not found
+% initialize distances
+n=length(adj);            % number of nodes
+adjL=adj2adjL(adj);       % list of neighbors
 
-while not(isempty(Q))
+dist=inf(1,n);            % unkown distance from s to all nodes
+dist(s)=0;                % distance from s to s
+
+previous=[1:n; inf(1,n)]';  % {i: inf}, i=1:n, inf -> not assigned
+S=cell(1,n); % shortest path sequence
+
+
+Q= 1:n; % all unvisited vertices, entire graph
+while ~isempty(Q) 
+    % get min dist member among unvisited vertices
+    [dmin,ind]=min(dist(Q));
+    u=Q(ind);
     
-    [dmin,ind] = min(d(Q));
+    % termination condition - save source-u path
+    S{u}=[];
+    t=u;
+    while not(isempty(find(previous(:,1)==t)))  % t in previous.keys():
+        % insert u at the beginning of S
+        S{u}=[t S{u}];
+        t=previous(t,2);
+    end
+    if ~isempty(target) && u==target
+        dist=dist(u); P=S{u};
+        return
+    end            
     
-    for i=1:length(Q)
-        alt = d(Q(ind))+adj(Q(ind),Q(i));
-        if adj(Q(ind),Q(i))>0 && d(Q(i))>alt % A shorter path has been found
-            
-            d(Q(i))=d(Q(ind))+adj(Q(ind),Q(i));
-            
+    % =========================================
+    Q=purge(Q,u);  % remove u from Q
+    for v=1:length(adjL{u})   % across all neighbors of u
+        v=adjL{u}(v);        
+        alt=dist(u)+adj(u,v);
+        if alt < dist(v)
+            dist(v)=alt;
+            previous(v,2)=u;
         end
-    end 
-    Q = setdiff(Q,Q(ind));
+    end
 end
 
+P=S;

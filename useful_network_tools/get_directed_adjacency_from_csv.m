@@ -1,4 +1,4 @@
-function A = get_directed_adjacency_from_csv(filename, nodes, year, month)
+function A = get_directed_adjacency_from_csv(filename, nodes, year, month, month2)
 % read and parse csv file
 fid = fopen(filename,'rt');
 C = textscan(fid, '%d %d %D', 'Delimiter',',','CollectOutput',false);
@@ -11,7 +11,7 @@ A = zeros(nodes);
 
 % Time period
 tlower = datetime(year,month,01);
-tupper = datetime(year,month+1,01);
+tupper = datetime(year,month2,01);
 
 % Generate Adjacency
 for k = 1:n
