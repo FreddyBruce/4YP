@@ -12,14 +12,16 @@ addpath(filePattern2);
 filePattern3 = fullfile(pwd, 'commDetNMF');
 addpath(filePattern3);
 
-
-V = get_adjacency_from_csv('data.csv',151,2001,01,02);
+month = 'm1';
+V.(month) = get_adjacency_from_csv('data.csv',151,2001,01,02);
 
 
 % Running commDetNMF
-month = 'm1';
-[P.(month),g.(month),W,H,max_rank, invbeta] = commDetNMFInitial(V);
+
+[P.(month),g.(month),w,h,max_rank, invbeta] = commDetNMFInitial(V.(month));
 ib.(month) = invbeta;
+W.(month) = w;
+H.(month) = h;
 
 % Import next Adjacency Matrices and running commDetNMF
 for i = 2:11
@@ -27,8 +29,10 @@ for i = 2:11
     m = num2str(i);
     month = strcat('m',m);
     % Importing next adjacency matrix
-    V = get_adjacency_from_csv('data.csv',151,2000,i,i+1);
+    V.(month) = get_adjacency_from_csv('data.csv',151,2001,i,i+1);
     % Running commDetNMF
-    [P.(month),g.(month),W,H,max_rank,invbeta] = commDetNMFInitial(V,max_rank,W,H,invbeta);
+    [P.(month),g.(month),w,h,max_rank, invbeta] = commDetNMFInitial(V.(month),max_rank,w,h,invbeta);
     ib.(month) = invbeta;
+    W.(month) = w;
+    H.(month) = h;
 end

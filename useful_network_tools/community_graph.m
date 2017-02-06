@@ -27,6 +27,9 @@ A=1*(W>0);
 N = size(W,1);
 groups_number = max(size(Groups));
 coordinate_multiplier = 10;
+radius = 100;
+Theta = 2*pi/groups_number;
+Rho = 0;
 
 %% PRODUCE GRID
 grid_occupation = zeros(groups_number);
@@ -35,15 +38,18 @@ grid_XY = zeros(groups_number,2);
 %% ASSIGN GROUPS TO GRID POINTS
 for i=1:groups_number
     found_empty=false;
-    while ~found_empty
-        occ_index_X = ceil(rand(1)*groups_number);
-        occ_index_Y = ceil(rand(1)*groups_number);
-        if grid_occupation(occ_index_X,occ_index_Y)==0
-            grid_occupation(occ_index_X,occ_index_Y) = i;
-            grid_XY(i,:) = [occ_index_X occ_index_Y].*coordinate_multiplier;
-            found_empty=true;
-        end
-    end 
+    grid_XY(i,:) = [radius*sin(Rho) radius*cos(Rho)]
+    Rho = Rho + Theta;
+%     while ~found_empty
+%         occ_index_X = ceil(rand(1)*groups_number);
+%         occ_index_Y = ceil(rand(1)*groups_number);
+%         if grid_occupation(occ_index_X,occ_index_Y)==0
+%             grid_occupation(occ_index_X,occ_index_Y) = i;
+% %             grid_XY(i,:) = [occ_index_X occ_index_Y].*coordinate_multiplier;
+% 
+%             found_empty=true;
+%         end
+%     end 
 end
 
 %% ASSIGN COORDINATES TO EACH NODE

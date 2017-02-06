@@ -40,7 +40,7 @@ end
 %% Concordance Calculation
 
 % Calculate the concordance for entire dataset
-ave_conc = zeros(1,n-1);
+ave_conc_d = zeros(1,n-1);
 for i = 1:n-1
     % Generate stucture names
     m1 = num2str(i);
@@ -48,11 +48,11 @@ for i = 1:n-1
     month1 = strcat('m',m1);
     month2 = strcat('m',m2);
     % Calculate concordance between entire months
-    conc.(month1) = commDetNMFConcordance(g.(month1),g.(month2));
-    ave_conc(i) = mean(conc.(month1));
+    conc_d.(month1) = commDetNMFConcordance(g_d.(month1),g_d.(month2));
+    ave_conc_d(i) = mean(conc_d.(month1));
 end
 
-plot(ave_conc);
+plot(ave_conc_d);
 xlabel('Time Step');
 ylabel('Concordance');
 axis([1 n-1 0 1]);
