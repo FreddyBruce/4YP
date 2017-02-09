@@ -17,13 +17,18 @@ fid = fopen('random_emails_1.csv','rt');
 C_random = textscan(fid, '%d %d %D', 'Delimiter',',','CollectOutput',false);
 fclose(fid);
 
-n = 5;
+C{1,3} = datenum(C{1,3});
+C_random{1,3} = datenum(C_random{1,3});
+
+n = 1000;
 timestep = 0;
 L = zeros(n,1);
 
 for i = 1:n
-    timestep = timestep + 86400;
-    A = get_directed_adjacency(C,151,C{1,3}(1,1),timestep);
-    Anull = get_directed_adjacency(C_random,151,C{1,3}(1,1),timestep);
-    L(i) = dissimilarity(A,Anull);
+    s = num2str(i);
+    step = strcat('s',s);
+    timestep = timestep + 60;
+    A.(step) = get_directed_adjacency(C,151,C{1,3}(4000,1),timestep);
+    Anull.(step) = get_directed_adjacency(C_random,151,C_random{1,3}(4000,1),timestep);
+    L(i) = dissimilarity(A.(step),Anull.(step));
 end

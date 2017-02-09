@@ -11,7 +11,7 @@ dates = importdata('dates.csv',',');
 
 %% Randomize, augment and export to csv
 
-for i = 1:2
+for i = 1:3
     emails_random = emails(randperm(length(emails)));
     output = [emails_random, dates];
     cell2csv(sprintf('random_emails_%d.csv',i), output, ',');
