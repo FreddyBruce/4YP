@@ -32,6 +32,7 @@ C_null_2{1,3} = datenum(C_null_2{1,3});
 C_null_3{1,3} = datenum(C_null_3{1,3});
 
 n = 1000;
+timestep = 0;
 L = zeros(n,3);
 
 for i = 1:n
