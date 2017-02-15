@@ -1,13 +1,11 @@
-function A = get_directed_adjacency(C, nodes,  t1, deltat)
+function A = get_directed_adjacency(C, nodes,  tlower, tupper)
 
 n = size(C{1, 1}, 1);
 
 % Generate empty adjacency Matrix
 A = zeros(nodes);
 
-% Time period
-tlower = t1;
-tupper = tlower+deltat;
+
 
 
 % Generate Adjacency

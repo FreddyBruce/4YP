@@ -13,7 +13,7 @@ filePattern3 = fullfile(pwd, 'commDetNMF');
 addpath(filePattern3);
 
 month = 'm1';
-V.(month) = get_adjacency_from_csv('data.csv',151,2001,01,02);
+V.(month) = get_adjacency_from_csv('data.csv',151,2000,01,02);
 
 
 % Running commDetNMF
@@ -29,7 +29,7 @@ for i = 2:11
     m = num2str(i);
     month = strcat('m',m);
     % Importing next adjacency matrix
-    V.(month) = get_adjacency_from_csv('data.csv',151,2001,i,i+1);
+    V.(month) = get_adjacency_from_csv('data.csv',151,2000,i,i+1);
     % Running commDetNMF
     [P.(month),g.(month),w,h,max_rank, invbeta] = commDetNMFInitial(V.(month),max_rank,w,h,invbeta);
     ib.(month) = invbeta;
