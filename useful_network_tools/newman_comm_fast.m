@@ -74,10 +74,10 @@ for g=1:length(groups_hist)
   num_modules=[num_modules length(groups_hist{g})];
 end
 
-set(gcf,'Color',[1 1 1],'Colormap',jet);
-plot(num_modules,Q,'ko-')
-xlabel('number of modules / communities')
-ylabel('modularity metric, Q')
+%set(gcf,'Color',[1 1 1],'Colormap',jet);
+%plot(num_modules,Q,'ko-')
+%xlabel('number of modules / communities')
+%ylabel('modularity metric, Q')
 
 
 function dQ=deltaQ(groups,adj,i,j)

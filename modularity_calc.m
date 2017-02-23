@@ -28,5 +28,5 @@ for i = 1:n
     A = get_undirected_adjacency(C,151,start,finish);
     [groups_hist,Q(i,:)] = newman_comm_fast(A);
     Qmax(i) = max(Q(i,:));
-    display(i);
+    fprintf('%d\n',i);
 end
