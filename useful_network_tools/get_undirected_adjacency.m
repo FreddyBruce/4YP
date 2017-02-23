@@ -1,4 +1,4 @@
-function A = get_directed_adjacency(C, nodes,  tlower, tupper)
+function A = get_undirected_adjacency(C, nodes,  tlower, tupper)
 
 n = size(C{1, 1}, 1);
 
@@ -12,6 +12,7 @@ for k = 1:n
         i = C{1, 1}(k, 1);
         j = C{1, 2}(k, 1);
         A(i,j) = A(i,j) + 1;
+        A(j,i) = A(j,i) + 1;
     end
     
 end
