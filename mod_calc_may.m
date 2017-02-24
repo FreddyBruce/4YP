@@ -16,8 +16,8 @@ fclose(fid);
 C{1,3} = datenum(C{1,3});
 
 
-n = 180;
-timestep = 1;
+n = 50;
+timestep = 0.1;
 start = 120+7.304889687500000e+05;
 finish = start + timestep;
 Qmax = zeros(n,1);
