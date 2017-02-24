@@ -42,17 +42,17 @@ end;
 
 N = size(V,1);
 
-% %remove non-connected nodes
-% active_nodes = or(sum(V)~=0,transpose(sum(V,2)~=0));
-% active_node_indices = find(active_nodes);
-% non_active_nodes = ~active_nodes;
-% non_active_node_indices = find(non_active_nodes);
-% 
-% if sum(non_active_nodes)>0
-%    V = V(active_node_indices,active_node_indices);
-%    fprintf('\nNOTE: the following non-connected nodes are removed from the graphs:\n')
-%    disp(non_active_node_indices)
-% end
+%remove non-connected nodes
+active_nodes = or(sum(V)~=0,transpose(sum(V,2)~=0));
+active_node_indices = find(active_nodes);
+non_active_nodes = ~active_nodes;
+non_active_node_indices = find(non_active_nodes);
+
+if sum(non_active_nodes)>0
+   V = V(active_node_indices,active_node_indices);
+   fprintf('\nNOTE: the following non-connected nodes are removed from the graphs:\n')
+   disp(non_active_node_indices)
+end
 
 %now scale the incoming matrix to lie in [0,1] for all elements
 X = scale01(V);
@@ -93,27 +93,27 @@ else
     g = (1:size(V,1))';
 end
 
-% % recover original indices
-% K = length(g);
-% number_of_disconnected_nodes = sum(non_active_nodes);
-% if number_of_disconnected_nodes>0
-%         
-%     Pnew = zeros(N,size(P,2));
-%         
-%     % fix active
-%     for k=1:K
-%        g{k} = active_node_indices(g{k});
-%     end
-%     Pnew(active_nodes,:) = P;
-%     
-%     % fix inactive
-%     for k=K+1:K+number_of_disconnected_nodes
-%        g{k} = non_active_node_indices(k-K);
-%        Pnew(g{k},:) = 0;
-%     end    
-%     
-%     P = Pnew;
-% end
+% recover original indices
+K = length(g);
+number_of_disconnected_nodes = sum(non_active_nodes);
+if number_of_disconnected_nodes>0
+        
+    Pnew = zeros(N,size(P,2));
+        
+    % fix active
+    for k=1:K
+       g{k} = active_node_indices(g{k});
+    end
+    Pnew(active_nodes,:) = P;
+    
+    % fix inactive
+    for k=K+1:K+number_of_disconnected_nodes
+       g{k} = non_active_node_indices(k-K);
+       Pnew(g{k},:) = 0;
+    end    
+    
+    P = Pnew;
+end
 
 end
 %--------------
