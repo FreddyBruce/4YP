@@ -18,7 +18,7 @@ C{1,3} = datenum(C{1,3});
 
 n = 180;
 timestep = 1;
-start = 60+7.308523715277778e+05;
+start = 60+7.304889687500000e+05;
 finish = start + timestep;
 Qmax = zeros(n,1);
 Q = zeros(n,151);

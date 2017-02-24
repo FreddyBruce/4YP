@@ -1,15 +1,18 @@
 %% Data Generation
 
 % Get path to a subfolder off the current working directory
-filePattern = fullfile(pwd, 'Data/enronmail/update/dissi_2000');
+filePattern = fullfile(pwd, 'Data/enronmail/update/dissi_2001');
 addpath(filePattern);
 
 % add csvToAdjacency to working directory
 filePattern2 = fullfile(pwd, 'useful_network_tools');
 addpath(filePattern2);
 
+% add csvToAdjacency to working directory
+filePattern3 = fullfile(pwd, 'commDetNMF');
+addpath(filePattern3);
 
-fid = fopen('data_2000.csv','rt');
+fid = fopen('data_2001.csv','rt');
 C = textscan(fid, '%d %d %D', 'Delimiter',',','CollectOutput',false);
 fclose(fid);
 
@@ -18,15 +21,17 @@ C{1,3} = datenum(C{1,3});
 
 n = 180;
 timestep = 1;
-start = 120+7.304889687500000e+05;
+start = 120+7.308523715277778e+05;
 finish = start + timestep;
-Qmax = zeros(n,1);
-Q = zeros(n,151);
+Etotal = zeros(n,1);
+
 
 for i = 1:n
-    finish = finish + 1;
     A = get_undirected_adjacency(C,151,start,finish);
-    [groups_hist,Q(i,:)] = newman_comm_fast(A);
-    Qmax(i) = max(Q(i,:));
+    P = commDetNMF(A);
+    E = get_relative_entropy(P); %total entropy
+    E(isnan(E)) = 0;
+    Etotal(i) = sum(E);
     fprintf('%d\n',i);
+    finish = finish + timestep;
 end
