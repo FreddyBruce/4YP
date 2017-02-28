@@ -19,7 +19,7 @@ fclose(fid);
 C{1,3} = datenum(C{1,3}); % Convert to serial datetime
 %% Load Adjacency Matrix & Run CommDetNMF
 month = 'm1';
-V.(month) = get_undirected_adjacency(C,151,start,finish);
+V.(month) = get_directed_adjacency(C,151,start,finish);
 %Run comDetNMF
 [P.(month),g.(month),w,h,max_rank, invbeta] = commDetNMFInitial(V.(month));
 ib.(month) = invbeta;
