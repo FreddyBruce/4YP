@@ -1,6 +1,6 @@
 function [P,V,g,W,H,ib] = enron_dynamic_community_detection(window,step,n)
 %% Variables
-start = 7.304889687500000e+05;
+start = 7.304889687500000e+05; 
 finish = start + window;
 %% Adding required file patterns
 filePattern = fullfile(pwd, 'Data/enronmail/update');
