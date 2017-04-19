@@ -1,5 +1,5 @@
 
-for i = 1:10
+for i = 1:5
     clear P V g W H ib
     [P,V,g,W,H,ib] = enron_dynamic_community_detection(103,1,627);
     
